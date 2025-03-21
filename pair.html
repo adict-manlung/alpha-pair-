@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Session Generator</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -17,10 +18,11 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      font-family: 'Poppins', Arial, sans-serif;
+      font-family: 'Fredoka One', cursive; /* Fun and bold font */
       color: #f5f5f5;
       overflow: hidden;
       position: relative;
+      background: linear-gradient(135deg, #1e1e2f, #2a2a40);
     }
 
     /* Background Video */
@@ -32,19 +34,38 @@
       height: 100%;
       object-fit: cover;
       z-index: -1;
+      opacity: 0.6;
     }
 
-    /* Transparent container */
+    /* Transparent container with fire edges */
     .container {
       text-align: center;
       padding: 30px;
       background: rgba(22, 36, 71, 0.8); /* semi-transparent background */
       border-radius: 15px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       width: 90%;
       max-width: 420px;
       transition: all 0.3s ease;
       position: relative;
+      backdrop-filter: blur(10px);
+      border: 2px solid transparent;
+      animation: fireEdges 2s infinite alternate;
+    }
+
+    @keyframes fireEdges {
+      0% {
+        border-color: #ff6f00;
+        box-shadow: 0 0 10px #ff6f00, 0 0 20px #ff6f00, 0 0 30px #ff6f00;
+      }
+      50% {
+        border-color: #ff3c00;
+        box-shadow: 0 0 15px #ff3c00, 0 0 25px #ff3c00, 0 0 35px #ff3c00;
+      }
+      100% {
+        border-color: #ff9f00;
+        box-shadow: 0 0 10px #ff9f00, 0 0 20px #ff9f00, 0 0 30px #ff9f00;
+      }
     }
 
     .container:hover {
@@ -58,6 +79,7 @@
       overflow: hidden;
       margin: 0 auto 20px;
       transition: transform 0.3s ease;
+      border: 3px solid rgba(255, 255, 255, 0.1);
     }
 
     .bot-logo img {
@@ -68,7 +90,7 @@
     }
 
     .typing-effect {
-      font-size: 1.8em;
+      font-size: 2em; /* Larger font size */
       font-weight: bold;
       color: #e94560;
       overflow: hidden;
@@ -78,7 +100,7 @@
     }
 
     #sessionGenerate {
-      font-size: 1.2em;
+      font-size: 1.5em; /* Larger font size */
       color: #aaa;
       overflow: hidden;
       white-space: nowrap;
@@ -103,12 +125,13 @@
       width: 100%;
       padding: 12px;
       font-size: 1em;
-      border: 1px solid #ddd;
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 8px;
       outline: none;
       transition: all 0.3s ease;
-      background-color: #0f3460;
+      background-color: rgba(15, 52, 96, 0.5);
       color: #f5f5f5;
+      font-family: 'Fredoka One', cursive; /* Consistent font */
     }
 
     .input-field input::placeholder {
@@ -117,32 +140,44 @@
 
     .input-field input:focus {
       border-color: #e94560;
+      box-shadow: 0 0 8px rgba(233, 69, 96, 0.6);
     }
 
     .code-display {
       padding: 15px;
-      background-color: #0f3460;
+      background-color: rgba(15, 52, 96, 0.5);
       border-radius: 8px;
       margin: 20px 0;
-      font-size: 1.1em;
+      font-size: 1.2em; /* Larger font size */
       color: #f5f5f5;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: 'Fredoka One', cursive; /* Consistent font */
     }
 
     .copy-button, .generate-button {
-      background-color: #e94560;
-      color: #fff;
       border: none;
       padding: 12px 25px;
-      font-size: 1em;
+      font-size: 1.1em; /* Larger font size */
       font-weight: bold;
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.3s ease;
       margin-top: 10px;
+      color: #fff;
+      font-family: 'Fredoka One', cursive; /* Consistent font */
+    }
+
+    .generate-button {
+      background-color: #e94560;
+    }
+
+    .copy-button {
+      background-color: #0f3460;
     }
 
     .copy-button:hover, .generate-button:hover {
-      background-color: #eb3b58;
+      opacity: 0.9;
+      transform: translateY(-2px);
     }
 
     .copy-button:active, .generate-button:active {
@@ -175,9 +210,9 @@
 
   <div class="container">
     <div class="bot-logo">
-      <img src="https://files.catbox.moe/2gegza.jpg" alt="Bot Logo">
+      <img src="https://files.catbox.moe/s6qx00.jpg" alt="Bot Logo">
     </div>
-    <div class="typing-effect" id="typingText">Keith bot developer</div>
+    <div class="typing-effect" id="typingText">Adict Manlung</div>
     <p id="sessionGenerate">Session Generate</p>
 
     <div class="input-field">
@@ -204,6 +239,19 @@
 
     document.addEventListener("DOMContentLoaded", function () {
       setTimeout(startTypingSessionGenerate, 2000);
+    });
+
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    document.querySelectorAll('.generate-button, .copy-button').forEach(button => {
+      button.style.backgroundColor = getRandomColor();
     });
 
     document.getElementById("submit").addEventListener("click", async (e) => {
@@ -242,6 +290,5 @@
       });
     }
   </script>
-
 </body>
 </html>
