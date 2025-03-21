@@ -1,5 +1,1 @@
-***WEB-PAIR SESSION ID GENERATOR USING MEGA***
-
------------
-
-***BY SILENTLOVER432***
+**Mega Nz session generater**
