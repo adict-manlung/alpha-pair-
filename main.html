@@ -1,257 +1,247 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="robots.txt.html" type="image/x-icon">
+  <title>Session Generator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
-    /* General Body Styling */
-    body {
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Arial', sans-serif;
-      color: #e2e8f0;
-      position: relative;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1; /* Ensure body content is above the video */
+      box-sizing: border-box;
     }
 
-    /* Video Background */
-    video.background-video {
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Poppins', Arial, sans-serif;
+      color: #f5f5f5;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Background Video */
+    .background-video {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Cover the whole screen */
-      z-index: -1; /* Ensure the video is behind the content */
+      object-fit: cover;
+      z-index: -1;
     }
 
-    /* Star Animation for Twinkling Stars */
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle 1.5s infinite ease-in-out;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 0.8; }
-    }
-
-    /* Generate Stars */
-    function createStars() {
-      for (let i = 0; i < 200; i++) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        const size = Math.random() * 2 + 1;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.top = `${Math.random() * 100}vh`;
-        star.style.left = `${Math.random() * 100}vw`;
-        document.body.appendChild(star);
-      }
-    }
-    createStars();
-
-    /* Button Container */
-    .button-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    /* Transparent container */
+    .container {
       text-align: center;
-      z-index: 10;
+      padding: 30px;
+      background: rgba(22, 36, 71, 0.8); /* semi-transparent background */
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      width: 90%;
+      max-width: 420px;
+      transition: all 0.3s ease;
       position: relative;
-      flex-grow: 1;
     }
 
-    /* Typing Effect */
+    .container:hover {
+      transform: scale(1.02);
+    }
+
+    .bot-logo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .bot-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .typing-effect {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #e94560;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #e94560;
+      animation: typing 2s steps(20, end), hide-caret 0s 2s forwards;
+    }
+
+    #sessionGenerate {
+      font-size: 1.2em;
+      color: #aaa;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #aaa;
+      visibility: hidden;
+    }
+
     @keyframes typing {
       from { width: 0; }
       to { width: 100%; }
     }
 
-    @keyframes blinkCaret {
-      from, to { border-color: transparent; }
-      50% { border-color: #fff; }
+    @keyframes hide-caret {
+      to { border-right: none; }
     }
 
-    h3 {
-      color: #1e3a8a;
-      font-size: 30px;
-      margin-bottom: 20px;
-      font-weight: bold;
-      overflow: hidden; /* Ensure the text stays within the container */
-      border-right: .15em solid #fff; /* The caret */
-      white-space: nowrap; /* Keep all the text on one line */
-      animation:
-        typing 3.5s steps(40, end),
-        blinkCaret .75s step-end infinite;
+    .input-field {
+      margin: 20px 0;
     }
 
-    /* Rainbow Button Animation */
-    @keyframes rainbowBackground {
-      0% { background-color: #ff0000; }
-      14% { background-color: #ff7f00; }
-      28% { background-color: #00ff00; }
-      42% { background-color: #0000ff; }
-      57% { background-color: #4b0082; }
-      71% { background-color: #ff0000; }
-      100% { background-color: #ff0000; }
+    .input-field input {
+      width: 100%;
+      padding: 12px;
+      font-size: 1em;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      transition: all 0.3s ease;
+      background-color: #0f3460;
+      color: #f5f5f5;
     }
 
-    /* Button Styling */
-    .button {
-      display: inline-block;
-      width: 220px;
-      font-size: 18px;
-      font-weight: 500;
-      height: 50px;
-      border: 2px solid #444;
+    .input-field input::placeholder {
+      color: #aaa;
+    }
+
+    .input-field input:focus {
+      border-color: #e94560;
+    }
+
+    .code-display {
+      padding: 15px;
+      background-color: #0f3460;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-size: 1.1em;
+      color: #f5f5f5;
+    }
+
+    .copy-button, .generate-button {
+      background-color: #e94560;
       color: #fff;
-      border-radius: 30px;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1em;
+      font-weight: bold;
+      border-radius: 8px;
       cursor: pointer;
-      margin: 10px;
-      text-align: center;
-      line-height: 50px;
-      text-decoration: none;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      transition: background 0.5s, box-shadow 0.3s ease;
-      animation: rainbowBackground 5s linear infinite;
+      transition: all 0.3s ease;
+      margin-top: 10px;
     }
 
-    .button:hover {
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    .copy-button:hover, .generate-button:hover {
+      background-color: #eb3b58;
     }
 
-    /* Footer Section with Moving Rainbow Text */
-    footer {
-      position: fixed;
-      bottom: 10px;
-      width: 100%;
-      text-align: center;
-      padding: 10px 0;
-      z-index: 10;
-      animation: rainbowText 10s linear infinite;
+    .copy-button:active, .generate-button:active {
+      transform: scale(0.98);
     }
 
-    @keyframes rainbowText {
-      0% { color: red; }
-      14% { color: orange; }
-      28% { color: yellow; }
-      42% { color: green; }
-      57% { color: blue; }
-      71% { color: indigo; }
-      85% { color: violet; }
-      100% { color: red; }
+    #loading-spinner {
+      display: none;
+      color: white;
+      margin-top: 10px;
     }
 
-    footer b a {
-      color: #fff;
-      text-decoration: none;
+    .fa-spinner {
+      animation: spin 2s linear infinite;
     }
 
-    footer b a:hover {
-      text-decoration: underline;
-    }
-
-    /* Moving Bar Animation */
-    .moving-bar {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      height: 6px;
-      background-color: #ffeb3b;
-      animation: moveBar 5s linear infinite;
-    }
-
-    @keyframes moveBar {
-      0% { left: -100%; }
-      100% { left: 100%; }
-    }
-
-    /* Dynamic Info Area */
-    #Info {
-      margin-top: 20px;
-      font-size: 16px;
-      font-weight: bold;
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
-  <!-- Video Background -->
-  <video class="background-video" autoplay loop muted>
-    <source src="https://files.catbox.moe/pjzc5i.mp4" type="video/mp4">
+
+  <!-- Background Video -->
+  <video autoplay muted loop class="background-video">
+    <source src="https://files.catbox.moe/a1fsk3.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
-  <!-- Content Section -->
-  <div class="button-container">
-    <h3>This is Keith Md session</h3>
-    <a href="/pair" class="button">PAIR CODE</a><br>
-    <a href="https://deploy-two-pied.vercel.app" class="button">DEPLOY TO HEROKU </a><br>
-    <a href="https://github.com/Keithkeizzah/KEITH-MD/fork" class="button">FORK KEITH REPO</a><br>
-    
-    <div class="current-info" id="Info"><b>Loading...</b></div>
+  <div class="container">
+    <div class="bot-logo">
+      <img src="https://files.catbox.moe/2gegza.jpg" alt="Bot Logo">
+    </div>
+    <div class="typing-effect" id="typingText">Keith bot developer</div>
+    <p id="sessionGenerate">Session Generate</p>
+
+    <div class="input-field">
+      <input type="text" id="mobileNumber" placeholder="Enter your mobile number with country code">
+    </div>
+
+    <button class="generate-button" id="submit">Generate Pair Code</button>
+
+    <div id="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+
+    <div class="code-display" id="codeDisplay">Display pair code here</div>
+    <button class="copy-button" id="copy" onclick="copyCode()">Copy Pair Code</button>
   </div>
 
-  <!-- Footer Section -->
-  <footer>
-    <b>&copy; 2024 <a href="https://github.com/Keithkeizzah">Regards Keith </a></b>
-  </footer>
-
-  <!-- Moving Bar -->
-  <div class="moving-bar"></div>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
   <script>
-    // Update Time, Date, and Day info dynamically
-    function updateInfo() {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      const dayName = dayNames[now.getDay()];
-      const date = now.toLocaleDateString(); 
-
-      const timeString = `${hours}:${minutes}:${seconds}`;
-      const infoString = `Time: ${timeString} | Date: ${date} | Day: ${dayName}`;
-      document.getElementById('Info').textContent = infoString;
+    function startTypingSessionGenerate() {
+      const sessionGenerate = document.getElementById("sessionGenerate");
+      sessionGenerate.style.visibility = "visible";
+      sessionGenerate.style.animation = "typing 1.5s steps(15, end), hide-caret 0s 1.5s forwards";
     }
 
-    // Update info every second
-    setInterval(updateInfo, 1000);
-    updateInfo();
+    document.addEventListener("DOMContentLoaded", function () {
+      setTimeout(startTypingSessionGenerate, 2000);
+    });
 
-    // Fetch Country Flag from IP Address
-    async function fetchCountryFlag() {
-      try {
-        const res = await fetch('https://api.davidcyriltech.my.id/status');
-        const data = await res.json();
-        const countryCode = data.country_code;
-        const flag = `https://flagcdn.com/w320/${countryCode.toLowerCase()}.png`;
-        const flagImg = document.createElement('img');
-        flagImg.src = flag;
-        flagImg.alt = `${data.country_name} Flag`;
-        flagImg.style.width = '40px';
-        flagImg.style.height = 'auto';
-        flagImg.style.marginTop = '20px';
-        document.body.appendChild(flagImg);
-      } catch (error) {
-        console.error("Error fetching country flag:", error);
+    document.getElementById("submit").addEventListener("click", async (e) => {
+      e.preventDefault();
+      const mobileNumberInput = document.getElementById("mobileNumber");
+      const codeDisplay = document.getElementById("codeDisplay");
+      const loadingSpinner = document.getElementById("loading-spinner");
+
+      const mobileNumber = mobileNumberInput.value.trim();
+      if (!mobileNumber) {
+        codeDisplay.innerText = '❗ Enter your WhatsApp number with country code.';
+        return;
       }
-    }
 
-    fetchCountryFlag();
+      loadingSpinner.style.display = "block";
+      codeDisplay.innerText = '';
+
+      try {
+        const response = await axios(`/code?number=${mobileNumber.replace(/[^0-9]/g, "")}`);
+        const code = response.data.code || "❗ Service Unavailable";
+        codeDisplay.innerHTML = `CODE: <span style="color:red;font-weight:bold">${code}</span>`;
+      } catch (error) {
+        console.error("Error generating code:", error);
+        codeDisplay.innerText = '❗ Error generating code.';
+      } finally {
+        loadingSpinner.style.display = "none";
+      }
+    });
+
+    function copyCode() {
+      const codeDisplay = document.getElementById("codeDisplay").innerText;
+      navigator.clipboard.writeText(codeDisplay.replace('CODE: ', '')).then(() => {
+        alert("Pair Code copied to clipboard!");
+      }).catch(err => {
+        console.error("Failed to copy text: ", err);
+      });
+    }
   </script>
+
 </body>
 </html>
